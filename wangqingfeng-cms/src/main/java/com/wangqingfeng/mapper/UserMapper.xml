@@ -12,9 +12,10 @@
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
     <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, password, nickname, birthday, gender, locked, created, updated, role
+    id, username, password, nickname, birthday, gender, locked, created, updated, role, url
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -69,6 +70,9 @@
       <if test="role != null" >
         role,
       </if>
+      <if test="url != null" >
+        url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -101,6 +105,9 @@
       <if test="role != null" >
         #{role,jdbcType=VARCHAR},
       </if>
+      <if test="url!= null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wangqingfeng.bean.User" >
@@ -132,6 +139,9 @@
       </if>
       <if test="role != null" >
         role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="url!= null" >
+        url = #{url,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

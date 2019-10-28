@@ -238,4 +238,13 @@ public class MyController {
 		req.setAttribute("user", user2);
 		return "my/user";
 	}
+	
+	/**
+	 * 	修改用户信息
+	 */
+	@ResponseBody
+	@PostMapping("user/update")
+	public boolean update(User user) {
+		return us.updateByPrimaryKeySelective(user)>0;
+	}
 }
