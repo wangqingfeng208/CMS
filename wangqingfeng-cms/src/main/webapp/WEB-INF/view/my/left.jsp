@@ -21,7 +21,7 @@
 				<a class="channel" href="javascript:void(0)" class="list-group-item">上传头像</a>
 			</li>
 			<li class="list-group-item  text-center">
-				<a class="channel" href="javascript:void(0)" class="list-group-item">个人设置</a>
+				<a class="channel" href="javascript:void(0)" data="/my/user/update" class="list-group-item">个人设置</a>
 			</li>
 			<li class="list-group-item  text-center">
 				<a class="channel" href="javascript:void(0)" data="/toCollectList" class="list-group-item">个人收藏</a>

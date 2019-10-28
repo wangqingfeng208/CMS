@@ -20,7 +20,7 @@
 			<div class="form-group form-inline">
 				<label for="url">博客地址</label>
 				<input type="text" name="url" class="form-control" value="${user.url }">
-				<a href="${user.url}" target="blank">进入网址</a>
+				<a href="http://${user.url}" target="blank">进入网址</a>
 			</div>
 			<div class="form-group form-inline">
 				<button class="btn btn-info" type="button" onclick="update()">更新</button>

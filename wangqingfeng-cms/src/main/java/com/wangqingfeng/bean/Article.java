@@ -44,8 +44,18 @@ public class Article implements Serializable {
     private  String original;//文章来源
     
     private String keywords;//关键词
+    
+    private String terms;//文章标签
 
-    public String getOriginal() {
+    public String getTerms() {
+		return terms;
+	}
+
+	public void setTerms(String terms) {
+		this.terms = terms;
+	}
+
+	public String getOriginal() {
 		return original;
 	}
 

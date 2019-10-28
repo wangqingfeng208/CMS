@@ -19,6 +19,8 @@
 <body>
 	<div class="container">
 		<div class="form-group form-inline">
+			<label for="terms">文章标签:</label>
+			<input id="term" type="text" class="form-control" name="terms" value="${article.terms }">
 			<label for="title">文章标题:</label>
 			<input id="title" type="text" class="form-control" name="title" value="${article.title }">
 			&nbsp;
@@ -93,7 +95,7 @@ $(function(){
 })
 function query(){
 	//在框架的中间区域显示查询
-	$("#center").load("/my/articles?title="+$("[name='title']").val()+"&status="+$("[name='status']").val());
+	$("#center").load("/my/articles?title="+$("[name='title']").val()+"&status="+$("[name='status']").val()+"&terms="+$("[name='terms']").val());
 }
 </script>
 </html>

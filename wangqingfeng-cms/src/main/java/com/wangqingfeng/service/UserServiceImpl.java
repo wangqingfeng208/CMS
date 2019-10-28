@@ -86,6 +86,9 @@ public class UserServiceImpl implements UserService {
 		if(u == null) {
 			throw new CMSException("当前用户不存在");
 		}
+		if(u.getLocked() == 1) {
+			throw new CMSException("当前用户已被禁用");
+		}
 		//if(u.getPassword().equals(Md5Util.md5Encoding(user.getPassword()))) {少了一个非数据库是明码这里是暗码
 		if(!u.getPassword().equals(Md5Util.md5Encoding(user.getPassword()))) {
 			throw new CMSException("密码不正确");

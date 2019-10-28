@@ -31,36 +31,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <sql id="Blob_Column_List" >
     content, summary
   </sql>
-  <select id="selects" resultMap="ResultMapWithBLOBs">
-	  select * from cms_article 
-	  <where>
-	     <!-- 标题 -->
-	     <if test="title!=null and title!=''">
-	      title like "%"#{title}"%"
-	     </if>
-	     <!-- 栏目查询 -->
-	     <if test="channelId!=null and channelId!=0">
-	      and channel_Id  =#{channelId}
-	     </if>
-	      <!-- 分类查询 -->
-	     <if test="categoryId!=null and categoryId!=0">
-	      and category_Id  =#{categoryId}
-	     </if>
-	     <!-- 文章审核状态查询 -->
-	     <if test="status!=null">
-	      and status  =#{status}
-	     </if>
-	     <if test="userId!=null">
-	      and user_id  =#{userId}
-	     </if>
-	     <if test="contentType!=null">
-      		and content_type  = #{contentType}
-     	 </if>
-	     <if test="created!=null">
-	      and created between #{created} and now() 
-	     </if>
-	  </where>
-	  order by created desc
+	<select id="selects" resultMap="ResultMapWithBLOBs">
+		select a.*,GROUP_CONCAT(t.unique_name) as terms  from cms_article  a LEFT JOIN cms_article_term  m on a.id =m.aid 
+		LEFT JOIN cms_term  t on m.tid=t.id  
+	<where>
+		<!-- 标题 -->
+		<if test="title!=null and title!=''">
+			a.title like "%" #{title} "%"
+		</if>
+		<!-- 栏目查询 -->
+		<if test="channelId!=null and channelId!=0">
+			and  a.channel_Id  =#{channelId}
+		</if>
+		<!-- 分类查询 -->
+		<if test="categoryId!=null and categoryId!=0">
+			and  a.category_Id  =#{categoryId}
+		</if>
+		<!-- 文章审核状态查询 -->
+		<if test="status!=null">
+			and  a.status  =#{status}
+		</if>
+		<!-- 按照作者查询 -->
+		<if test="userId!=null">
+			and  a.user_id  =#{userId}
+		</if>
+		<if test="contentType!=null">
+			and  a.content_type  =#{contentType}
+		</if>
+		<!-- 热门文章查询-->
+		<if test="hot!=null">
+			and  a.hot  =#{hot}
+		</if>
+		<!-- 标签查询-->
+		<if test="terms!=null">
+			and t.unique_name like "%"#{terms}"%"
+		</if>
+		<!-- 24小时内热文 -->
+		<if test="created!=null">
+			and   a.created between #{created} and now()
+		</if>
+	</where>
+		group by a.id 
+		order by a.created desc
   </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
@@ -86,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       #{deleted,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARCHAR}, #{summary,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wangqingfeng.bean.ArticleWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.wangqingfeng.bean.ArticleWithBLOBs" useGeneratedKeys="true" keyProperty="id">
     insert into cms_article
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -184,13 +196,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <if test="summary != null" >
         #{summary,jdbcType=LONGVARCHAR},
       </if>
-        <if test="contentType!= null" >
+      <if test="contentType!= null" >
        #{contentType},
       </if>
-       <if test="keywords!= null" >
+      <if test="keywords!= null" >
        #{keywords},
       </if>
-          <if test="original!= null" >
+      <if test="original!= null" >
        #{original}
       </if>
     </trim>

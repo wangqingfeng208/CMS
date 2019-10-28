@@ -117,6 +117,7 @@ public class MyController {
 		article.setHot(0);
 		article.setCreated(new Date());
 		article.setUpdated(new Date());
+		article.setContentType(ArticleEnum.HTML.getCode());//文章类型
 		return as.insertSelective(article)>0;
 	}
 	

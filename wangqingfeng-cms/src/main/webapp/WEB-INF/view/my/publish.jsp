@@ -51,6 +51,10 @@
 			<input class="form-control" type="text" name="title" id="title">
 		</div>
 		<div class="form-group">
+			<label for="terms"> 文章标签:</label>
+			<input class="form-control" type="text" name="terms" id="terms">
+		</div>
+		<div class="form-group">
 			<label for="content">文章内容:</label>
 			<textarea rows="10" cols="30" name="content1" id="content" style="width: 825px"></textarea>
 		</div>
